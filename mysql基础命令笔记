@@ -1,0 +1,16 @@
+一、基本sql语句
+  库操作
+    show databases;  列出所有库
+    show create database db1; 查看所创建库的属性
+    use db1;  切换库
+    create database db1;  创建库
+    drop database db2; 删除库
+  表操作
+  show tables;  列出当前数据库中有多少表
+  create table t1 (
+  [字段名] [数据类型] not null(不能为空) [unique(唯一键)] primary key(主键) auto_increment(自增)
+  例：
+  id int not null unique primary key auto_increment,
+  name varchar(20) not null,
+  foreign key [字段名] references [需要链接的表名] [字段名]  外键
+  );
