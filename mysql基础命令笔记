@@ -35,7 +35,65 @@
     alter table [表名] change id uid int;  修改字段的名称及属性
     alter table [表名] modify uid int(10)  修改字段的属性
     drop table [表名]  删除表
-  
+
+  5.select命令查询表的操作
+    select * from t1;  查询t1表的所有数据
+    select id,name from t1;  查询t1表的部分列的数据
+    
+    where 过滤
+    例：
+    select * from t1 where name='xiaoming';  查询t1表中name为xiaoming的所有数据
+    select * from t1 wehre name='xiaoming' and grade>50;  查询t1表中name为xiaoming，并且grade大于50的所有数据
+    例题：
+    1.查询奖金高于工资的20%的员工信息
+    select * from emp where ((comm/sal)*100)>20;
+    2.查询10号部门中工种为MANAGER和20号部门中工种为CLERK的员工的信息
+    select *
+    from emp 
+    where deptno in (10,20) and job in ('MANAGER','CLERK');
+
+    group by 分组
+    例：
+    select sex,count(sex) from t1 group by sex;      对sex进行分组，统计指定字段中相同的值的个数
+    一般来说，对谁进行分组，前面就写谁
+    
+    having用于group by分组之后的条件过滤
+    
+    order by  排序
+    select * from t2 order by chinese;  对指定字段进行升序排序，默认是升序  从低到高
+    select * from t2 order by chinese desc;  倒序，从高到低
+    select * from t2 order by chinese asc;   升序，从低到高
+
+    limit 限制查询结果
+    select * from t2 order by chinese desc limit 2;  只显示最上面的两条记录
+    
+    **查询语法：**
+    select 字段列表
+    from table_name where <条件表达式>
+    [group by 字段列表]
+    [order by 字段列表]
+    注意：
+    ①查询语句必须有select和from子句
+    ②where子句用于查询结果的过滤，如果有group by，必须写在group by的前面
+    ③having用于group by分组之后的条件过滤
+
+    **比较运算符：**
+
+    | 运算符      | 含义                     |
+    | ----------- | ----------------------  |
+    | =           | 等于                    |
+    | <=>         | 安全等于，可以比较null |
+    | !=或！=     | 不等于                 |
+    | >=          |                        |
+    | <=          |                        |
+    | >           |                        |
+    | <           |                      |
+    | is null     | 判断一个值是否为null   |
+    | is not null | 判断一个值是否不为null |
+
+    以下两行代码的作用是一样的：
+    SELECT * FROM customer WHERE typeID<=>NULL;
+    SELECT * FROM customer WHERE typeID is NULL;
 
 
   
