@@ -1,16 +1,41 @@
 一、基本sql语句
-  库操作
+  1.库操作
     show databases;  列出所有库
     show create database db1; 查看所创建库的属性
     use db1;  切换库
     create database db1;  创建库
     drop database db2; 删除库
-  表操作
-  show tables;  列出当前数据库中有多少表
-  create table t1 (
-  [字段名] [数据类型] not null(不能为空) [unique(唯一键)] primary key(主键) auto_increment(自增)
-  例：
-  id int not null unique primary key auto_increment,
-  name varchar(20) not null,
-  foreign key [字段名] references [需要链接的表名] [字段名]  外键
-  );
+  2.表操作
+    show tables;  列出当前数据库中有多少表
+    create table t1 (
+    [字段名] [数据类型] not null(不能为空) [unique(唯一键)] primary key(主键) auto_increment(自增)
+    例：
+    id int not null unique primary key auto_increment,
+    name varchar(20) not null,
+    foreign key [字段名] references [需要链接的表名] [字段名]  外键
+    );      创建表，至少要有一个字段，多个字段得用,隔开
+  
+  3.数据类型
+    int 数字类型
+    varchar(20)  可以自由设定长度1-255
+    char     一般不用设置，固定为255，可伸缩
+    date     时间长度，一般为xx年xx月xx日
+    datetime  详细的时间长度，一般为xx年xx月xx日xx时xx分xx秒
+    decimal()  规定数字长度，例如decimal(8，2) 八位数字，并保留俩位小数
+
+    show create table t1;  查看表的创建属性
+    desc t1;  查看表结构
+
+  4.alter命令的表操作
+    alter table [表名] rename to [新的表名];   修改表的名字
+    alter table [表名] add bts varchar(10) not null;  添加字段再末尾
+    alter table [表名] add qq int not null after ename;  添加新的字段在指定字段后面
+    alter table [表名] add uid int first;  添加字段在首位
+    alter table [表名] drop uid;  删除指定字段
+    alter table [表名] change id uid int;  修改字段的名称及属性
+    alter table [表名] modify uid int(10)  修改字段的属性
+    drop table [表名]  删除表
+  
+
+
+  
