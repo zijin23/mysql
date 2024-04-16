@@ -1,0 +1,45 @@
+一、多表查询 
+  多表查询是SQL中用于从多个表中检索数据的一种技术。当数据分散在多个表中，
+  并且这些表之间存在某种关系（如外键关系）时，我们通常需要使用多表查询来检索相关信息。
+  内连接：俩个表字段的值完全一样
+    1.select t1.name,t1.sex,t2.math from t1 join t2 on t1.name=t2.name;
+    2.select t1.name,t1.sex,t2.math from t1,t2 where t1.name=t2.name;
+    3.select t.name ,t.sex,s.math from tent t,student s where t.id=s.id; !t,s是别名，相当于给这个表另外取了个名字，是隐式的内连接
+    使用别名可以使查询更简洁，尤其是在涉及多个表或列名冲突的情况下。
+  例题：
+  
+  -- 1.查询人数最多的部门信息
+    select d.dname '部门',count(e.ename) '部门人数'
+    from dept d LEFT JOIN emp e
+    on e.deptno=d.deptno
+    group by d.dname
+    order by count(e.ename) desc limit 1;
+
+  -- 2.查询平均薪水最高的部门名称
+    select d.dname '部门',round(avg(e.sal),2) '部门平均工资'
+    from emp e,dept d
+    where e.deptno=d.deptno 
+    group by d.dname
+    order by avg(e.sal) desc limit 1;
+
+  外连接：左，右连接
+    左: 显示出左表中所有的记录
+    右: 显示出右表中所有的记录
+      > select t1.name,t1.sex,t2.math from t1 left join t2 on t1.name=t2.name;        #左连接
+      > select t2.name,t1.sex,t2.math from t1 right join t2 on t1.name=t2.name;       #右连接
+
+
+  二、子查询
+    子查询（Subquery）是嵌套在其他SQL查询中的查询。它们可以用于SELECT，INSERT，UPDATE或DELETE语句中，
+    并且可以作为过滤条件、计算字段的值或生成要插入、更新或删除的数据。
+      select * from t2 where english=(select max(english) from t2);    #子查询
+    例：
+      1.查询工资最高的员工的姓名。
+        SELECT name   
+        FROM employees   
+        WHERE salary = (SELECT MAX(salary) FROM employees);
+      2.查询所有工作地在DALLAS且工资等级为4级的员工信息
+        select *
+        from dept d,emp e
+        where d.deptno=e.deptno and d.loc='DALLAS' 
+        and (select grade from salgrade where e.sal between losal and hisal and grade=4);
