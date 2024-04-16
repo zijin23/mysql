@@ -5,6 +5,7 @@
     use db1;  切换库
     create database db1;  创建库
     drop database db2; 删除库
+  
   2.表操作
     show tables;  列出当前数据库中有多少表
     create table t1 (
@@ -34,7 +35,7 @@
     alter table [表名] drop uid;  删除指定字段
     alter table [表名] change id uid int;  修改字段的名称及属性
     alter table [表名] modify uid int(10)  修改字段的属性
-    drop table [表名]  删除表
+    drop table  [表名]  删除表
 
   5.select命令查询表的操作
     select * from t1;  查询t1表的所有数据
@@ -79,55 +80,73 @@
 
     **比较运算符：**
 
-    | 运算符      | 含义                     |
+    | 运算符      | 含义                    |
     | ----------- | ----------------------  |
     | =           | 等于                    |
-    | <=>         | 安全等于，可以比较null |
+    | <=>         | 安全等于，可以比较null  |
     | !=或！=     | 不等于                 |
     | >=          |                        |
     | <=          |                        |
     | >           |                        |
-    | <           |                      |
-    | is null     | 判断一个值是否为null   |
-    | is not null | 判断一个值是否不为null |
-
+    | <           |                        |
+    | is null     | 判断一个值是否为null    |
+    | is not null | 判断一个值是否不为null  |
+ 
     以下两行代码的作用是一样的：
     SELECT * FROM customer WHERE typeID<=>NULL;
     SELECT * FROM customer WHERE typeID is NULL;
 
   6.**聚合函数和分组查询**
 
-    | sum         | 求和                           |
-    | ----------- | ------------------------------ |
-    | max         | 获取最大值                     |
-    | min         | 获取最小值                     |
-    | avg         | 获取平均值                     |
-    | count(列名) | 从查询结果中获取指定列有多少行 |
+    | sum         | 求和                             |
+    | ----------- | ------------------------------   |
+    | max         | 获取最大值                       |
+    | min         | 获取最小值                       |
+    | avg         | 获取平均值                       |
+    | count(列名) | 从查询结果中获取指定列有多少行    |
 
     **分组查询：**
-
     group by 字段列表 [having 条件表达式]
 
     **注意：**
-
     ①通常情况下，分组查询group by需要与聚合函数一起使用
-
     ②使用where子句对分组之前的数据进行过滤
-
     ③使用having子句对分组之后的数据进行过滤
-
     ④多字段分组：
-
-    分组优先级从左至右，即先按第一个字段进行分组，然后在第一个字段相同的记录中，再根据第二个字段进行分组，以此类推。第二个分组是第一个分组完成之后的内部分组；
-
-    例：按性别和宿舍统计每组的java最高成绩
-
+    分组优先级从左至右，即先按第一个字段进行分组，然后在第一个字段
+    相同的记录中，再根据第二个字段进行分组，以此类推。第二个分组是
+    第一个分组完成之后的内部分组；
     ⑤分组查询的select子句后的显示的字段列表，必须是参与分组的字段和聚合函数的结果。
+    
+    7.insert添加数据命令
+      insert [into] table_name [(字段列表)] values (字段值列表)
 
+    注意：
+      1. 字符串建议使用单引号
+      2. 向自动增加的int类型字段插入值的时候，建议插入null。
+      3. 设定了默认值的字段，在插入数据的时候可以使用“default”默认值。
+      4. 添加新数据时，需要考虑外键约束，原则上，主表先添加数据，从表再添加数据，
+      从表中的外键的值必须在主表中是存在的。
+      5. 添加新数据时，建议新加入的列值一定要和表内列的值一一对应，这有助于保持
+      数据的准确性和完整性，防止因数据不匹配而导致的错误或混淆。
+    例：
+      insert into t1 values (1,'xiaoming',23);  添加一条数据
+      insert into t1 values (1,'xiaoming',23),(2,'xiaoma',10),(3,'xiaochen',34);  添加多条数据时用,隔开
 
+    8.update修改数据命令
+      update table_name set 字段名=字段值,..... where <条件表达式>;
+    例：
+      update t1 set name='xiaoming',age=30 where id=1;  这条语句更新了名为t1的表中id为1的记录的两个字段：name和age。
 
+    9.delete删除一行数据  
+      delete from table_name [where 条件表达式] ;
+    例：
+      delete from t1 where id=1;  删除了名为t1的表中id为1的记录。
 
-
+    **注意：**
+      删除时，可能涉及数据的外键约束检查，可设置外键约束的“删除时”属性值为“set null”或“cascade”，
+      set null的作用在主表数据被删除时，从表对应外键字段的值自动设置为null，cascade的作用是主表数据
+      被删除时，从表数据被级联删除。
 
 
 
