@@ -8,12 +8,21 @@
   
   2.表操作
     show tables;  列出当前数据库中有多少表
+
+    约束
+    not null 不能为空
+    primary key 主键
+    unique 唯一
+    auto_increment 自增
+    default 默认值
+    foreign key 外键
+    
     create table t1 (
-    [字段名] [数据类型] not null(不能为空) [unique(唯一键)] primary key(主键) auto_increment(自增)
+    [字段名] [数据类型] not null unique primary key auto_increment 
     例：
     id int not null unique primary key auto_increment,
     name varchar(20) not null,
-    foreign key [字段名] references [需要链接的表名] [字段名]  外键
+    foreign key [字段名] references [需要链接的表名] [字段名]  
     );      创建表，至少要有一个字段，多个字段得用,隔开
   
   3.数据类型
